@@ -1,0 +1,72 @@
+.card-body{
+    padding-top: 60px !important;
+}
+
+.selctcls .select2-container {
+  width: 100%;
+  border-radius: 0;
+}
+.selctcls .select2-choice {
+border-radius: 0;
+height: 35px;
+background: #fff;
+border: 1px solid #ccc;
+padding: 4px 10px;
+}
+.selctcls .select2-arrow {
+    background: #f3f3f3 !important;
+    border-radius: 0 !important;
+    position: relative;
+}
+.pagination {
+    display: flex!important;
+    padding-left: 0;
+    margin: 20px 0;
+    border-radius: 4px;
+    justify-content: center;
+    display: ms-flex!important;
+}
+.invalid-feedback strong{
+    color: #dd4b39 !important;
+}
+.mt-2 {
+    margin-top: 20px;
+}
+.dropdown-menu > li > .prchkbtn {
+    background: #3c8dbc !important;
+    color: #fff !important;
+    font-weight: bold;
+}
+.navbar-nav > .tasks-menu > .dropdown-menu > li.footer > .prchkbtn{color: #fff !important;}
+#cart_list li {
+  font-size: 15px;
+  font-weight: bold;
+  color: #72afd2;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+#cart_list li a {
+  float: right;
+  padding: 0 10px;
+  line-height: 17px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  border: 0;
+}
+.cvrimgs img {
+    max-width: 100%;
+    width: 100%;
+}
+.content-header > h1 {
+    margin: 0;
+    font-size: 40px;
+}
+.sp-box {
+    display: inline-block;
+    padding: 0 10px;
+    border: 1px solid #3c8dbc;
+    margin: 0 5px 0 0;
+    background: #3c8dbc;
+    color: #fff;
+}

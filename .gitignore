@@ -1,0 +1,8 @@
+.env
+/node_modules
+/public/storage
+/storage/*.key
+/vendor
+/storage/framework/
+/storage/logs/
+composer.lock
