@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('header')
-    Customer's Feedbacks
+    Waiter's Feedback
 @endsection
 @section('content')
 
@@ -43,7 +43,7 @@
                                                       </a>
                                                       </td>
                                                       <td>
-                                                      <a href="{{  url('/viewfeedback/'.$item->id) }}">
+                                                      <a href="{{  url('/viewfeedbackofcustomer/'.$item->id) }}">
                                                       <span class="sp-box">VIEW FEEDBACK</span>
                                                       </a>
                                                       </td>

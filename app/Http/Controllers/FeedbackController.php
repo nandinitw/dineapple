@@ -19,26 +19,18 @@ class FeedbackController extends Controller
     public function getCustomerFeedback(Request $request)
     {
         //dd(123);
-        dd(RatingAnswer ::all());
-    }
-
-    public function getWaiterFeedBack(Request $request)
-    {
-        dd(4454546);
-    }
-
-    public function getFeedback(Request $request)
-    {
         $users = $this->user->getCustomers($request);
         return view('admin.feedbacks.index', compact('users'));
     }
 
     public function viewFeedback($id)
     {
-        $ratings = RatingAnswer::all()->where('rated_by',$id);
-        dd($ratings);
+        $ratings = $this->rating_answer->getCustomerRatingAnswers($id);
+        $user = $this->user->find($id);
+        return view('admin.feedbacks.view', compact('ratings','id','user'));
     }
 
+   
     
 
 

@@ -2,16 +2,21 @@
 
 namespace App\Models;
 use App\Models\Outlet;
+use App\Models\Ratings;
 use Illuminate\Database\Eloquent\Model;
 use DB;
-use App\Models\Ratings;
 use Auth;
 
 class RatingAnswer extends Model
 {
     protected $table = 'ratings_answers';
     protected $fillable = ['outlet_id','rating_id','user_id','rated_by','answer','state'];
-   
+
+    public function ratings()
+    {
+        return $this->belongsTo('App\Models\Ratings','rating_id');
+    }
+
     public  function rateExperience($request,$outlet_id)
     {
        $params = $request->all();      
@@ -74,6 +79,29 @@ class RatingAnswer extends Model
            }
        }
        return true;
+    }
+
+    public function getCustomerRatingAnswers($user_id)
+    {
+        return $this->where('ratings_answers.state','1')
+                    ->join('ratings','ratings.id','=','ratings_answers.rating_id')
+                    ->where('ratings_answers.rated_by',$user_id)
+                    ->where('ratings.rated_by',"customer")
+                    ->groupby('ratings_answers.rating_id')
+                    ->orderby('ratings_answers.updated_at','DESC')
+                    ->get();
+    }
+
+    public static function getRatingAnswers($user_id)
+    {  
+        $result =  self::where('ratings_answers.user_id',$user_id)
+                    ->where('ratings.rated_by','waiter')
+                    ->where('ratings_answers.state','1')
+                    ->select('ratings_answers.*','ratings.name')
+                    ->leftJoin('ratings','ratings.id','=','ratings_answers.rating_id')   
+                    ->get();
+                    
+        return $result;            
     }
     
 }

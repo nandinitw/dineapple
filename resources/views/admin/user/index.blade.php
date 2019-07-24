@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('header')
-    Users
+    Users Management
       <div class="float-right action-btns pull-right" >
         <a href="{{ url('/users/create')}}" class="btn btn-default" role="button" aria-pressed="true">New</a>
         @if( sizeof($users))

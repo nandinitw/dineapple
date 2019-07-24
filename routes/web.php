@@ -89,11 +89,7 @@ Route::group(['middleware' => 'auth'], function() {
 
         //Feedbacks
         Route::get('customerfeedback','FeedbackController@getCustomerfeedback');
-        Route::get('waiterfeedback','FeedbackController@getWaiterfeedback');
-        Route::get('feedback','FeedbackController@getFeedback');
         Route::get('viewfeedback/{id}','FeedbackController@viewFeedback');
-
-
     });
 
 
@@ -146,6 +142,11 @@ Route::prefix('manage')->group(function () {
 
 Route::get('/foo', function () {
 Artisan::call('storage:link');
+});
+
+//Run in server. One time to generate application keys
+Route::get('/keygenerate', function () {
+    Artisan::call('key:generate');
 });
 
 Auth::routes();
