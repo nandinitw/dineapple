@@ -61,16 +61,16 @@
             </li>
             <!--<li class="treeview {{ (request()->is('feedback')) ? 'active' : '' }}"><a href="{{ url('feedback') }}"><span>Feedback Management</span></a></li>-->
 
-           <!-- <li class="treeview {{ (request()->is('customerfeedback') || request()->is('waiterfeedback')) ? 'active' : '' }}"><a href="#">Feedback Management</a>
+            <li class="treeview {{ (request()->is('customerfeedback') || request()->is('viewfeedback')) ? 'active' : '' }}"><a href="#">Feedback Management</a>
                     <ul class="treeview-menu">
-                                <li class="{{ (request()->is('customerfeedback')) ? 'active' : '' }}">
+                                <li class="{{ (request()->is('customerfeedback') || request()->is('viewfeedback')) ? 'active' : '' }}">
                                         <a href="{{ url('/customerfeedback') }}"><i class="fa fa-file-o" aria-hidden="true"></i>Customer's Feedbacks</a>
                                 </li>
-                                <li class="{{ (request()->is('waiterfeedback')) ? 'active' : '' }}">
+                                <!--<li class="{{ (request()->is('waiterfeedback')) ? 'active' : '' }}">
                                         <a href="{{ url('/waiterfeedback') }}"><i class="fa fa-file-o" aria-hidden="true"></i>Waiter's Feedbacks</a>
-                                </li>                
+                                </li>-->                
                     </ul>
-            </li>-->
+            </li>
             <!-- <li class="treeview {{ ( request()->is('pages') ) ? 'active' : '' }}"><a href="{{ url('/pages') }}">Pages</a></li>   -->     
         </ul>
     </section>

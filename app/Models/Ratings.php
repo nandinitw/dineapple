@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use App\Models\Outlet;
+use App\Models\RatingAnswer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use DB;
@@ -38,6 +39,12 @@ class Ratings extends Model
         return $this->belongsToMany(Outlet::class, 'ratings_outlets','rating_id');
     }
 
+
+    public function rating_answer()
+    {
+        return $this->hasMany('App\Models\RatingAnswer');
+    }
+
     public static function getCustomerRatingsOfOutlet($outlet_id)
     {
         $results =  DB::table('ratings')
@@ -67,5 +74,7 @@ class Ratings extends Model
                     ->get();    
         return $results;            
     }
+
+   
     
 }
