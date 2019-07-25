@@ -151,7 +151,7 @@
             <div class="box box-primary">
                 <div class="box-body">
                         @if(count($attributes))
-                            @include('admin.menuitems.attributes')
+                            @include('admin.menuitems.attributes_edit')
                         @endif
                 </div>
             </div>

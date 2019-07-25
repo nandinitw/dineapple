@@ -21,17 +21,22 @@ $varients = array_column($varients,'attributes');
                 }
                 //Set value for input fields            
                 if( isset( $varients[$attribute->slug] )) 
-                $attribute_set_value = $varients[$attribute->slug];    
+                $attribute_set_value = $varients[$attribute->slug]; 
+               
                 ?> 
 
                 @if($radio_options)
 
                     @foreach($radio_options as $key => $value)  
                         <?php
-                            $setselected = ( !empty( $varients[$attribute->slug] ) && $varients[$attribute->slug] == $value )? 'checked="checked"':'';      
+                            $setselected = ( !empty( $varients[$attribute->slug] ) && $varients[$attribute->slug] == $value )? 'checked="checked"':'';   
+                            if(is_array($varients[$attribute->slug])){
+                                $setselected = ( in_array($value,$varients[$attribute->slug]))? 'checked="checked"':'';      
+                            }
+                              
                         ?>       
                         <?php $checked_radio = ($key == 0) ? 'checked=true' : ''?>
-                        <input required type="radio" name="variants[0][{{$attribute->slug}}]" value="{{$value}}" {{ $setselected }} > {{$value}}<br>
+                        <input required type="radio" name="variants[0][{{$attribute->slug}}][]" value="{{$value}}" {{ $setselected }} > {{$value}}<br>
 
                     @endforeach
 
@@ -60,15 +65,22 @@ $varients = array_column($varients,'attributes');
                     @if($check_options)
 
                         @foreach($check_options as $key => $value)  
-
+                           
+                            
                             <?php   
                             //please pass the array index instead of counter in $varients[$counter]                           
                             if( !empty($varients[$counter]) ){
                             $varients = json_decode($varients[$counter],TRUE );
                             }
-                            $setselected = ( !empty( $varients[$attribute->slug] ) && $varients[$attribute->slug] == $value )? 'checked="checked"':'';                        
+                           
+                            //$setselected = ( !empty( $varients[$attribute->slug] ) && $varients[$attribute->slug] == $value )? 'checked="checked"':'';  
+                            $setselected = ( !empty( $varients[$attribute->slug] ) && $varients[$attribute->slug] == $value )? 'checked="checked"':'';   
+                            if(is_array($varients[$attribute->slug])){
+                                $setselected = ( in_array($value,$varients[$attribute->slug]))? 'checked="checked"':'';      
+                            }
+                                      
                             ?>      
-                            <?php $checked_radio = ($key == 0) ? 'checked=true' : ''?>
+                            
                             <input type="checkbox" name="variants[0][{{$attribute->slug}}][]" value="{{$value}}" {{ $setselected }} > {{$value}}<br>
 
                         @endforeach

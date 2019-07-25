@@ -64,7 +64,7 @@ class MenuItem extends Model
         return $ingredients; 
    }
 
-   public static function getMenuItems($outlet_id, $group_id){ 
+   /*public static function getMenuItems($outlet_id, $group_id){ 
 
             $results = array();    
             if( $outlet_id && $group_id ){
@@ -106,7 +106,42 @@ class MenuItem extends Model
                         
             }
             return $results;
-   }
+   }*/
+
+   public static function getMenuItems($outlet_id, $group_id){ 
+
+    $results = array();    
+    if( $outlet_id && $group_id ){
+
+        $results = DB::table('menu_items')
+                ->join('menu_groups','menu_groups.id','=','menu_items.group_id')
+                ->select('menu_items.*')
+                ->where('menu_groups.outlet_id','=', $outlet_id)
+                ->where('menu_items.group_id','=', $group_id)
+                ->where('menu_groups.state','=', '1')
+                ->get();
+              
+                
+                if( sizeof($results) ){                            
+                    foreach( $results as $key => $menu){  
+                        $items = DB::table('item_variants')
+                        ->join('menu_items','menu_items.id','=','item_variants.item_id')                        
+                        ->select('item_variants.*')
+                        ->where('item_variants.item_id','=', $menu->id)
+                        ->where('menu_items.state','=', '1')                      
+                        ->where('item_variants.state','=', '1')   
+                        ->get();  
+         
+                            
+                        $items = $items->toArray();
+                        $results[$key]->items = $items;
+                    }   
+                    //$results = ($results)? $results->toArray(): array();               
+                }
+                
+    }
+    return $results;
+}
 
    //function to add menu item varients
    public static function addVarients($menuitem, $request):bool{
@@ -167,6 +202,31 @@ class MenuItem extends Model
                     ->take(5)
                     ->get();
     }
+
+    public function updateMenuItem($request)
+    {
+        $menuItems = $this->findOrFail($request->id);                
+        $menuItems->name = $request->name;
+        $menuItems->group_id = $request->group_id;
+        $menuItems->description = $request->description;                
+        $menuItems->min_order = $request->min_order;
+        $menuItems->special_notes = $request->special_notes;
+        $menuItems->ingredients = $request->ingredients;                
+        $menuItems->preparation_time = $request->preparation_time;
+        $featured_image  = $request->input('image');
+
+        if($featured_image != '' && !file_exists(storage_path('app/public/media').'/'.$featured_image) ){
+                    if(copy('temp/'.$featured_image, storage_path('app/public/media').'/'.$featured_image)){
+                        unlink ('temp/'.$featured_image);
+                    }
+                    $menuItems->image = $featured_image;
+        }
+        $menuItems->touch();
+        $menuItems->save();
+
+        return $menuItems;
+    }
+
 
     
    
