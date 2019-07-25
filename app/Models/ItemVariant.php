@@ -21,4 +21,17 @@ class ItemVariant extends Model
         return $results;                
     }
 
+    
+    public function updateVariants($request)
+    {
+        if(sizeof($request['variants'])){
+            $item_variant = $this->where('item_id',$request->id)->first();
+            $item_variant['attributes'] = json_encode($request['variants'][0]);
+            $item_variant['price'] = (double)$request['variants'][0]['price'];
+            $item_variant->touch();
+            $item_variant->save();
+            return true;
+         }   
+    }
+
 }

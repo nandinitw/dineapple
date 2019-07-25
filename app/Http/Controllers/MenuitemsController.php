@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\MenuItem;
 use App\Models\Menugroup;
 use App\Models\Attribute;
+use App\Models\ItemVariant;
 
 
 class MenuitemsController extends Controller
@@ -17,10 +18,15 @@ class MenuitemsController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function __construct(Attribute $attribute,MenuItem $menuItem)
+     public function __construct(
+         Attribute $attribute,
+         MenuItem $menuItem,
+         ItemVariant $item_variant
+        )
     {
         $this->attribute = $attribute;
         $this->menuItem = $menuItem;
+        $this->item_variant = $item_variant;
         $this->middleware('auth');
     }
 
@@ -172,40 +178,14 @@ class MenuitemsController extends Controller
             $error = $v->errors();
             return redirect()->back()->withInput()->withErrors($v->errors());
         }  
-        
-        /*
-        $menuItems = MenuItem::findOrFail($request->id);                
-        $menuItems->name = $request->name;
-        $menuItems->group_id = $request->group_id;
-        $menuItems->description = $request->description;                
-        $menuItems->min_order = $request->min_order;
-        $menuItems->special_notes = $request->special_notes;
-        $menuItems->ingredients = $request->ingredients;                
-        $menuItems->preparation_time = $request->preparation_time;
-        $featured_image  = $request->input('image');
 
-        if($featured_image != '' && !file_exists(storage_path('app/public/media').'/'.$featured_image) ){
-                    if(copy('temp/'.$featured_image, storage_path('app/public/media').'/'.$featured_image)){
-                        unlink ('temp/'.$featured_image);
-                    }
-                    $menuItems->image = $featured_image;
-        }
+        //update master table
+        $result = $this->menuItem->updateMenuItem($request);
+        //update variants
+        $variants = $this->item_variant->updateVariants($request);
 
-        if( $menuItems->save() ){
-
-            if( MenuItem::addVarients($menuItems,$request) ){                        
-                $message = "Menu Item successfuly saved";
-            }else{                        
-                $message = "Menu Item saved, please add varient to the list!";
-            }
-
-            return redirect('/menuitems')->with('success',$message );
-
-        }else{
-            $message = "Menu item already exist";
-
-            return redirect('/menuitems')->with('error',$message );
-        } */
+        $message = "Item Saved Successfully";
+        return redirect('/menuitems')->with('success',$message );
 
     }
 
