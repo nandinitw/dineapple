@@ -119,6 +119,7 @@ class MenuItem extends Model
                 ->where('menu_groups.outlet_id','=', $outlet_id)
                 ->where('menu_items.group_id','=', $group_id)
                 ->where('menu_groups.state','=', '1')
+                ->where('menu_items.state','=', '1')
                 ->get();
               
                 
